@@ -45,6 +45,7 @@ def title_of_article(full_text):
     human_message_prompt = f"""
     Enclosed you find an scientific article. 
     What is the title of the article? 
+    Analysiere insbesondere die ersten Zeilen des Dokuments, da das typischerweise die Stelle ist, an der der Titel aufgeführt wird.
     Return only the title no further information.
     Never make up facts. If you don't know return 'I could not find a title'
     
@@ -136,7 +137,7 @@ def main():
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
         f'''
         ---
-        \n**Titel:**  {title_of_article(full_text)}
+        \n**Titel:**  {title_of_article(full_text[:1000])}
         \n**Autor:** Ralf Niemeyer
         '''
         
