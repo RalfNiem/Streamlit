@@ -157,11 +157,14 @@ def main():
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus", type="pdf")
     if uploaded_file is not None:
         num_pages, full_text = open_pdf(uploaded_file)
+        title = title_of_article(full_text[:1000])
+        autor = autor_of_article(full_text[:1000])
+        
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
         f'''
         ---
-        \n**Titel:**  {title_of_article(full_text[:1000])}
-        \n**Autor:** {autor_of_article(full_text[:1000])}
+        \n**Titel:**    {title}
+        \n**Autor:** {autor}
         '''
         
         # Zusammenfassung erstellen
