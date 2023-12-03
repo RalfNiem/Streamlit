@@ -43,7 +43,7 @@ def open_pdf(uploaded_file):
 
 def title_of_article(full_text):
     human_message_prompt = f"""
-    Enclosed you find the first few lines of an scientific article. 
+    Enclosed you find an scientific article. 
     What is the title of the article? 
     Return only the title no further information.
     Never make up facts. If you don't know return 'I could not find a title'
@@ -136,7 +136,7 @@ def main():
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
         f'''
         ---
-        \n**Titel:**  {title_of_article(full_text[:2000])}
+        \n**Titel:**  {title_of_article(full_text)}
         \n**Autor:** Ralf Niemeyer
         '''
         
