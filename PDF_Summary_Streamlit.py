@@ -3,6 +3,7 @@ import os
 
 # OpenAI
 import openai
+import tiktoken
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # PDF Document Loader
@@ -132,7 +133,7 @@ def create_summary(full_text):
 
     # Aufruf von OpenAI GPT-4 Turbo (ohne Langchain)
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", # gpt-4-1106-preview
+        model="gpt-4-1106-preview", # gpt-3.5-turbo
         temperature=0,
         messages=chat_prompt
     )
@@ -148,7 +149,7 @@ def save_summary(summary_text):
 
 
 #
-# Erstellt das Fenster mit TKinter Package
+# Erstellt das Fenster mit Streamlit
 #
 def main():
     st.title("Laras PDF Summary Generator")
@@ -158,14 +159,13 @@ def main():
     if uploaded_file is not None:
         num_pages, full_text = open_pdf(uploaded_file)
         title = title_of_article(full_text[:1000])
+        if title == 'I could not find a title':
+            title = ''
         autor = autor_of_article(full_text[:1000])
-        
-        st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
-        f'''
-        \n**Titel:**    {title}
-        \n**Autor:** {autor}
-        \n
-        '''
+        if autor == 'I could not find an autor':
+            autor = ''
+            
+        st.success(f'PDF mit dem Titel "{title}" und {num_pages} Seiten erfolgreich geladen!', icon="✅")
         
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
@@ -175,7 +175,7 @@ def main():
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
-            st.text_area("Zusammenfassung", summary_text, height=600)
+            st.text_area("Zusammenfassung", f"\n**Titel:** {title}\n**Autor:** {autor}\n\n{summary_text}", height=600)
 
             # Zusammenfassung speichern
             if st.button('Summary speichern'):
