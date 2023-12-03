@@ -152,7 +152,7 @@ def save_summary(summary_text):
 # Erstellt das Fenster mit Streamlit
 #
 def main():
-    st.title("Laras PDF Summary Generator")
+    st.title("Ralfs PDF Summary Generator")
 
     # Datei-Upload
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus, für die ich eine Zusammenfassung erstellen soll", type="pdf")
