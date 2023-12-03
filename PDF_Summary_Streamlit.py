@@ -164,6 +164,7 @@ def main():
         f'''
         \n**Titel:**    {title}
         \n**Autor:** {autor}
+        \n
         '''
         
         # Zusammenfassung erstellen
@@ -174,8 +175,7 @@ def main():
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
-            st.text_area(f"Titel: {title}\nAutor: {autor}\n\n")
-            st.text_area("Zusammenfassung", summary_text, height=600)
+            st.text_area("Zusammenfassung", f"Titel: {title}\nAutor: {autor}\n\n {summary_text}", height=600)
 
             # Zusammenfassung speichern
             if st.button('Summary speichern'):
