@@ -56,7 +56,7 @@ def title_of_article(full_text):
     chat_prompt = [{"role": "user", "content": human_message_prompt }]
 
     response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview"
+        model="gpt-4-1106-preview",
         temperature=0,
         messages=chat_prompt
     )
