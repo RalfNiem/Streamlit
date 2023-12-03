@@ -152,19 +152,19 @@ def save_summary(summary_text):
 # Erstellt das Fenster mit Streamlit
 #
 def main():
-    st.title("Laras PDF Summary Generator")
+    #st.title("Laras PDF Summary Generator")
+    st.header("Laras PDF Summary Generator", divider = True)
 
     # Datei-Upload
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus, für die ich eine Zusammenfassung erstellen soll", type="pdf")
     if uploaded_file is not None:
         num_pages, full_text = open_pdf(uploaded_file)
         title = title_of_article(full_text[:1000])
-        if title == 'I could not find a title':
+        if title == 'I could not find a title.':
             title = ''
         autor = autor_of_article(full_text[:1000])
-        if autor == 'I could not find an autor':
+        if autor == 'I could not find an autor.':
             autor = ''
-            
         st.success(f'PDF mit dem Titel "{title}" und {num_pages} Seiten erfolgreich geladen!', icon="✅")
         
         # Zusammenfassung erstellen
@@ -175,11 +175,14 @@ def main():
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
-            st.text_area("Zusammenfassung", f"\nTitel: {title}\nAutor: {autor}\n\n{summary_text}", height=600)
+            st.text_area("Zusammenfassung", f"Titel: {title}\nAutor: {autor}\n\n{summary_text}", height=600)
 
             # Zusammenfassung speichern
-            st.download_button('Summary jetzt speichern', summary_text)
-                
+            st.download_button('Summary speichern', 
+                               f'Titel: {title}\nAutor: {autor}\n\n{summary_text}',
+                               file_name=uploaded_file.name[:-4]+'.txt'
+                               )
+
 
 # Refresh des Fensters erzwingen zur korrekten Anzeige
 if __name__ == "__main__":
