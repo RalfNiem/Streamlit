@@ -162,7 +162,6 @@ def main():
         
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
         f'''
-        ---
         \n**Titel:**    {title}
         \n**Autor:** {autor}
         '''
@@ -171,6 +170,7 @@ def main():
         if st.button('Summary erstellen'):
             with st.spinner(f'Ich erstelle jetzt eine Zusammenfassung - das dauert ca 30 Sekunden'):
                 summary_text = create_summary(full_text)
+            st.text_area(f"Titel: {title}\nAutor: {autor}\n\n")
             st.text_area("Zusammenfassung", summary_text, height=600)
 
             # Zusammenfassung speichern
