@@ -3,7 +3,7 @@ import os
 
 # OpenAI
 import openai
-import tiktoken
+# import tiktoken
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # PDF Document Loader
