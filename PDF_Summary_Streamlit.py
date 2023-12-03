@@ -12,8 +12,6 @@ from pypdf import PdfReader
 # Streamlit
 import streamlit as st
 
-file_path = ""
-
 def open_pdf(uploaded_file):
     
     # PDF Datei mit PyPDF laden & Text extrahieren
@@ -26,7 +24,7 @@ def open_pdf(uploaded_file):
             pages_text.append(text)
 
         # Gibt zu Kontrolle im Terminalfenster zusätzliche Informationen aus
-        print(f"\nDatei: {file_path}")
+        print(f"\nDatei: {uploaded_file.name}")
         print(f"Umfang: {number_of_pages} Seiten")
 
         # Das Kapitel mit den Literaturangaben (= 'References') weglassen
@@ -152,7 +150,7 @@ def save_summary(summary_text):
 # Erstellt das Fenster mit Streamlit
 #
 def main():
-    #st.title("Laras PDF Summary Generator")
+    st.set_page_config(page_title='PDF Summary Generator', layout="centered")
     st.header("Laras PDF Summary Generator", divider = True)
 
     # Datei-Upload
@@ -170,11 +168,7 @@ def main():
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
             with st.spinner(f'Ich erstelle jetzt eine Zusammenfassung - das dauert ca 30 Sekunden'):
-                if len(full_text) > 13000:
-                    max_len = 13000
-                else:
-                    max_len = len(full_text)
-                summary_text = create_summary(full_text[:max_len])
+                summary_text = create_summary(full_text)
             st.text_area("Zusammenfassung", f"Titel: {title}\nAutor: {autor}\n\n{summary_text}", height=600)
 
             # Zusammenfassung speichern
