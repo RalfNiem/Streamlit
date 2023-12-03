@@ -45,7 +45,7 @@ def title_of_article(full_text):
     human_message_prompt = f"""
     Enclosed you find an scientific article. 
     What is the title of the article? 
-    Analysiere insbesondere die ersten Zeilen des Dokuments, da das typischerweise die Stelle ist, an der der Titel aufgeführt wird.
+    Analysiere insbesondere die allerersten Zeilen des Dokuments, da der Titel des Artikels typischerweise ganz am Anfang steht.
     Return only the title no further information. Don't start your answer with 'The title of the article is'.  
     Never make up facts. If you don't know return 'I could not find a title'
     
@@ -175,7 +175,7 @@ def main():
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
-            st.text_area("Zusammenfassung", f"Titel: {title}\nAutor: {autor}\n\n {summary_text}", height=600)
+            st.text_area("Zusammenfassung", summary_text, height=600)
 
             # Zusammenfassung speichern
             if st.button('Summary speichern'):
