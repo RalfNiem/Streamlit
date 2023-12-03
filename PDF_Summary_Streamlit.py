@@ -152,7 +152,7 @@ def save_summary(summary_text):
 # Erstellt das Fenster mit Streamlit
 #
 def main():
-    st.title("Ralfs PDF Summary Generator")
+    st.title("Laras PDF Summary Generator")
 
     # Datei-Upload
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus, für die ich eine Zusammenfassung erstellen soll", type="pdf")
@@ -175,11 +175,10 @@ def main():
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
-            st.text_area("Zusammenfassung", f"\n**Titel:** {title}\n**Autor:** {autor}\n\n{summary_text}", height=600)
+            st.text_area("Zusammenfassung", f"\nTitel: {title}\nAutor: {autor}\n\n{summary_text}", height=600)
 
             # Zusammenfassung speichern
-            if st.button('Summary speichern'):
-                st.download_button('Summary jetzt speichern', summary_text)
+            st.download_button('Summary jetzt speichern', summary_text)
                 
 
 # Refresh des Fensters erzwingen zur korrekten Anzeige
