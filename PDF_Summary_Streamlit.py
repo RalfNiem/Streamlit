@@ -169,7 +169,11 @@ def main():
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
             with st.spinner(f'Ich erstelle jetzt eine Zusammenfassung - das dauert ca 30 Sekunden'):
-                summary_text = create_summary(full_text)
+                if len(full_text) > 20000:
+                    max_len = 20000
+                else:
+                    max_len = len(full_text)
+                summary_text = create_summary(full_text[:max_len])
             st.text_area(f"Titel: {title}\nAutor: {autor}\n\n")
             st.text_area("Zusammenfassung", summary_text, height=600)
 
