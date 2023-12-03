@@ -46,8 +46,31 @@ def title_of_article(full_text):
     Enclosed you find an scientific article. 
     What is the title of the article? 
     Analysiere insbesondere die ersten Zeilen des Dokuments, da das typischerweise die Stelle ist, an der der Titel aufgeführt wird.
-    Return only the title no further information.
+    Return only the title no further information. Don't start your answer with 'The title of the article is'.  
     Never make up facts. If you don't know return 'I could not find a title'
+    
+    Scientific Article:
+
+    {full_text}
+    """ 
+
+    chat_prompt = [{"role": "user", "content": human_message_prompt }]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview",
+        temperature=0,
+        messages=chat_prompt
+    )
+
+    return response.choices[0].message['content']
+
+def autor_of_article(full_text):
+    human_message_prompt = f"""
+    Enclosed you find an scientific article. 
+    What is the autor of the article? 
+    Analysiere insbesondere die ersten Zeilen des Dokuments, da das typischerweise die Stelle ist, an der der Autor oder die Autoren aufgeführt werden.
+    Return only the autor no further information. Don't start your answer with 'The autor of the article is'.  
+    Never make up facts. If you don't know return 'I could not find an autor'
     
     Scientific Article:
 
@@ -138,7 +161,7 @@ def main():
         f'''
         ---
         \n**Titel:**  {title_of_article(full_text[:1000])}
-        \n**Autor:** Ralf Niemeyer
+        \n**Autor:** {autor_of_article(full_text[:1000])}
         '''
         
         # Zusammenfassung erstellen
