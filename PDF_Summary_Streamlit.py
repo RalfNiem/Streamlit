@@ -41,6 +41,28 @@ def open_pdf(uploaded_file):
     else:
         return 0, ""
 
+def title_of_article(full_text):
+    human_message_prompt = f"""
+    Enclosed you find the first few lines of an scientific article. 
+    What is the title of the article? 
+    Return only the title no further information.
+    Never make up facts. If you don't know return 'I could not find a title'
+    
+    Scientific Article:
+
+    {full_text}
+    """ 
+
+    chat_prompt = [{"role": "user", "content": human_message_prompt }]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview"
+        temperature=0,
+        messages=chat_prompt
+    )
+
+    return response.choices[0].message['content']
+
 
 def create_summary(full_text):
     # Prompt erstellen
@@ -112,9 +134,9 @@ def main():
     if uploaded_file is not None:
         num_pages, full_text = open_pdf(uploaded_file)
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
-        '''
+        f'''
         ---
-        \n**Titel:** Besondere Untersuchungen
+        \n**Titel:**  {title_of_article(full_text[:2000])}
         \n**Autor:** Ralf Niemeyer
         '''
         
