@@ -155,7 +155,7 @@ def main():
     st.title("Laras PDF Summary Generator")
 
     # Datei-Upload
-    uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus", type="pdf")
+    uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus, für die ich eine Zusammenfassung erstellen soll", type="pdf")
     if uploaded_file is not None:
         num_pages, full_text = open_pdf(uploaded_file)
         title = title_of_article(full_text[:1000])
