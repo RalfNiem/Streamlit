@@ -169,8 +169,8 @@ def main():
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
             with st.spinner(f'Ich erstelle jetzt eine Zusammenfassung - das dauert ca 30 Sekunden'):
-                if len(full_text) > 15000:
-                    max_len = 15000
+                if len(full_text) > 13000:
+                    max_len = 13000
                 else:
                     max_len = len(full_text)
                 summary_text = create_summary(full_text[:max_len])
