@@ -110,13 +110,12 @@ def main():
     # Datei-Upload
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus", type="pdf")
     if uploaded_file is not None:
-        st.success('PDF erfolgreich geladen!', icon="✅")
+        num_pages, full_text = open_pdf(uploaded_file)
+        st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
         
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
-            # Ersetzen Sie die Logik mit Ihrem PDF-Handling-Code
-            num_pages, full_text = open_pdf(uploaded_file) # Diese Funktion muss angepasst werden, um mit Streamlit kompatibel zu sein
-            with st.spinner(f'Lese das PDF mit {num_pages} Seiten und erstelle eine Zusammenfassung - das dauert ca 30 Sekunden'):
+            with st.spinner(f'Ich erstelle jetzt eine Zusammenfassung - das dauert ca 30 Sekunden'):
                 summary_text = create_summary(full_text)
             st.text_area("Zusammenfassung", summary_text, height=600)
 
