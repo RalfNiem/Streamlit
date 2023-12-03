@@ -110,12 +110,13 @@ def main():
     # Datei-Upload
     uploaded_file = st.file_uploader("Wähle eine PDF-Datei aus", type="pdf")
     if uploaded_file is not None:
-        '''
-        Titel: Besondere Untersuchungen
-        Autor: Ralf Niemeyer
-        '''
         num_pages, full_text = open_pdf(uploaded_file)
         st.success(f'PDF mit {num_pages} Seiten erfolgreich geladen!', icon="✅")
+        '''
+        ---
+        \n**Titel:** Besondere Untersuchungen
+        \n**Autor:** Ralf Niemeyer
+        '''
         
         # Zusammenfassung erstellen
         if st.button('Summary erstellen'):
