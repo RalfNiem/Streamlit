@@ -1,10 +1,23 @@
+# Das Programm nutzt GPT-4 Turbo um für ein PDF-Dokument eine Zusammenfassung zu erstellen
+# Als zusätzliches Gimmick, versucht das Prgramm den Titel & Autor des PDFs zu ermitteln 
+# Als Framework wird lediglich Streamlit für die GUI verwendet, auf Langchain oder LLamaIndex wurde verzichtet
+# 
+# Start des Programms:
+# 1) OPENAI KEY muss als Systemvariable gesetzt sein
+# 2) Ein passendes conda environment muss aktiviert ist zB über 'conda activate langchain'
+# 3) Programm im Terminal starten mit 'streamlit run PDF_Summary_Streamlit.py'
+# 
+# Versuche, mit PyInstaller oder py2app eine für OS X und Windows ausführbare Programmversion zu erstellen,
+# die einen einfachen Programmstart per "Doppelklick" ermöglich, waren nur bedingt erfolgreich
+#
+
 # Standard Helpers
 import os
 
-# OpenAI
+# OpenAI; OPENAI_API_KEY muss als Systemvariable gesetzt sein
 import openai
-# import tiktoken
 openai.api_key = os.getenv('OPENAI_API_KEY')
+MODEL_ID = "gpt-4-1106-preview" # GPT-4 Turbo
 
 # PDF Document Loader
 from pypdf import PdfReader
@@ -56,7 +69,7 @@ def title_of_article(full_text):
     chat_prompt = [{"role": "user", "content": human_message_prompt }]
 
     response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview",
+        model=MODEL_ID,
         temperature=0,
         messages=chat_prompt
     )
@@ -79,7 +92,7 @@ def autor_of_article(full_text):
     chat_prompt = [{"role": "user", "content": human_message_prompt }]
 
     response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview",
+        model=MODEL_ID,
         temperature=0,
         messages=chat_prompt
     )
@@ -131,7 +144,7 @@ def create_summary(full_text):
 
     # Aufruf von OpenAI GPT-4 Turbo (ohne Langchain)
     response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview", # gpt-3.5-turbo
+        model=MODEL_ID,
         temperature=0,
         messages=chat_prompt
     )
