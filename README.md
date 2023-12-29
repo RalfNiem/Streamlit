@@ -1,7 +1,7 @@
 # PDF Summary Generator
 
-Das Programm nutzt GPT-4 Turbo um für ein PDF-Dokument eine Zusammenfassung zu erstellen
-Als zusätzliches Gimmick, versucht das Prgramm den Titel & Autor des PDFs zu ermitteln 
+Das Programm nutzt GPT-4 Turbo um für ein PDF-Dokument eine Zusammenfassung zu erstellen  
+Als zusätzliches Gimmick, versucht das Prgramm den Titel & Autor des PDFs zu ermitteln  
 Als Framework wird lediglich Streamlit für die GUI verwendet, auf Langchain oder LLamaIndex wurde verzichtet
  
 Start des Programms:
