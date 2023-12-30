@@ -19,10 +19,10 @@ Die Streamlit Community Cloud ist eine Plattform, die Entwicklern ermöglicht, i
 Der Aufruf der App kann prinzipiell von jedem Rechner unter folgender Adresse erfolgen:  
 **https://laras-pdf-summary-generator.streamlit.app/**  
 
-Dabei muss der entsprechende App-Container erst geladen werden, so dass der Start ca 30 Sekunden dauert, bis der Startbildschirm erscheint  
-Um auch tatsächlich von jedem Rechner erreichbar zu sein, muss die App als 'öffentlich' konfiguriert sein. Die Streamlit-App kann [hier](https://share.streamlit.io/) verwaltet werden.
-
-Nice: Da die Streamlit-App direkt mit Github verbunden ist, sind Sourcecode Änderungen sofort im Programm sichtbar.
+Kleiner Disclaimer dazu:
+- Dabei muss der entsprechende App-Container erst geladen werden, so dass der Start ca 30 Sekunden dauert, bis der Startbildschirm erscheint
+- Um auch tatsächlich von jedem Rechner erreichbar zu sein, muss die App als 'öffentlich' konfiguriert sein. Die Streamlit-App kann [hier](https://share.streamlit.io/) verwaltet werden.
+- Da die Streamlit-App direkt mit Github verbunden ist, sind Sourcecode Änderungen sofort im Programm sichtbar.
 
 ## Streamlit
 Weiterführende Programm-Beispiele zu Streamlit sind auf [Github](https://github.com/streamlit/streamlit) vorhanden
