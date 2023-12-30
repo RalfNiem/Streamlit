@@ -16,7 +16,9 @@ die einen einfachen Programmstart per "Doppelklick" ermöglich, waren nur beding
 ## Aufruf über Internet (= Streamlit Community Cloud)
 Die Streamlit Community Cloud ist eine Plattform, die Entwicklern ermöglicht, ihre Streamlit-Apps kostenlos zu hosten und zu teilen. Sie bietet eine einfache und schnelle Möglichkeit, Projekte interaktiv im Web zu präsentieren. Nutzer können ohne komplexe Infrastruktur ihre Apps direkt aus ihrem GitHub-Repository bereitstellen und mit der Community oder einem breiteren Publikum teilen.  
 Die Streamlit-App kann [hier](https://share.streamlit.io/) verwaltet werden.  
-Der Aufruf der App kann von jedem Rechner unter folgender Adresse erfolgen: **https://ralfniem-streamlit-pdf-summary-streamlit-c3jqbf.streamlit.app/** Dabei muss der entsprechende App-Container erst geladen werden, so dass der Start ca 30 Sekunden dauert, bis der Startbildschirm erscheint  
+Der Aufruf der App kann von jedem Rechner unter folgender Adresse erfolgen:  
+**https://ralfniem-streamlit-pdf-summary-streamlit-c3jqbf.streamlit.app/**  
+Dabei muss der entsprechende App-Container erst geladen werden, so dass der Start ca 30 Sekunden dauert, bis der Startbildschirm erscheint  
 Da die Streamlit-App direkt mit Github verbunden ist, sind Sourcecode Änderungen sofort im Programm sichtbar 
 
 ## Streamlit
