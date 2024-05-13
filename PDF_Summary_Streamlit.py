@@ -17,7 +17,7 @@ import os
 # OpenAI; OPENAI_API_KEY muss als Systemvariable gesetzt sein
 import openai
 openai.api_key = os.getenv('OPENAI_API_KEY')
-MODEL_ID = "gpt-4-1106-preview" # GPT-4 Turbo
+MODEL_ID = "gpt-4-turbo" # GPT-4 Turbo
 
 # PDF Document Loader
 from pypdf import PdfReader
