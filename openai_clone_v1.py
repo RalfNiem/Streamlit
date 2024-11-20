@@ -12,7 +12,6 @@ import streamlit as st
 import os
 import base64
 import openai
-from io import StringIO
 from openai import OpenAI
 
 def main():
@@ -60,7 +59,7 @@ def encode_image(uploaded_file):
     return base64.b64encode(uploaded_file.getvalue()).decode('utf-8')
 
 
-def call_gpt4_api(user_input, uploaded_file):
+def call_gpt4_api(user_input, uploaded_file=None):
     # Calling OpenAI's GPT-4 API
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))  # Initialize OpenAI client with API key from environment variables
 
@@ -74,25 +73,31 @@ def call_gpt4_api(user_input, uploaded_file):
 
     try:
         # Prepare the conversation context messages
-        base64_image = encode_image(uploaded_file)
-        messages = [
-            {"role": "system", "content": system_prompt}, # System message to set the assistant's behavior
-            {"role": "user", "content": [
-                {
-                    "type": "text",
-                    "text": user_input,
-                },
-                {
-                    "type": "image_url",
-                    "image_url": {"url":  f"data:image/jpeg;base64,{base64_image}"},
-                },
-                ],
-            }
-        ]
+        if uploaded_file:
+            base64_image = encode_image(uploaded_file)
+            messages = [
+                {"role": "system", "content": system_prompt}, # System message to set the assistant's behavior
+                {"role": "user", "content": [
+                    {
+                        "type": "text",
+                        "text": user_input,
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {"url":  f"data:image/jpeg;base64,{base64_image}"},
+                    },
+                    ],
+                }
+                ]
+        else:
+            messages = [
+                {"role": "system", "content": system_prompt}, # System message to set the assistant's behavior
+                {"role": "user", "content": user_input}
+                ]
 
         # Make the API call to GPT-4 with the provided messages
         response = client.chat.completions.create(
-          model="gpt-4o",
+          model="gpt-4o-mini",
           messages=messages,
           temperature=0.6,
         )
