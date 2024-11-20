@@ -25,7 +25,7 @@ def main():
 
     # File Upload Section
     #st.subheader("Upload an Image (JPG, PNG or WEBP)")  # Subheader for file upload
-    uploaded_file = st.file_uploader("Upload an image", accept_multiple_files=False, type=["png", "jpg", "jpeg", "webp", "gif"])  # File uploader for supported file types
+    uploaded_file = st.file_uploader("Upload an image if you want ...", accept_multiple_files=False, type=["png", "jpg", "jpeg", "webp", "gif"])  # File uploader for supported file types
 
     # Submit Button
     submit_button = st.button("Submit")  # Button to submit the input
@@ -98,7 +98,7 @@ def call_gpt4_api(user_input, uploaded_file=None, chat_history=[]):
     try:
         # Make the API call to GPT-4 with the provided messages
         response = client.chat.completions.create(
-          model="gpt-4o-mini",
+          model="gpt-4o",
           messages=messages,
           temperature=0.6,
         )
