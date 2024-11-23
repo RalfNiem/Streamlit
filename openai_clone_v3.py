@@ -29,14 +29,20 @@ def main():
      # Column 1: User Input Section
     with col1:
         st.header("Wie kann ich Dir helfen?")  # Title for the left column
-        user_input = st.text_area("Deine Frage hier eingeben:", key="user_input", height=150, help="Bitte hier die Frage eingeben")  # Text area for user input, highlighted
-        st.markdown("<div style='margin-bottom: 50px;'></div>", unsafe_allow_html=True)  # Add margin between text area and file uploader
-        uploaded_file = st.file_uploader("Falls gewünscht, lade ein Bild hoch ...", accept_multiple_files=False, type=["png", "jpg", "jpeg", "webp", "gif"])  # File uploader
-        col_submit, col_new_chat = st.columns([2, 1], gap="large")
+        user_input = st.text_area("Deine Frage hier eingeben:", value=st.session_state.user_input, key="user_input", height=150, help="Bitte hier die Frage eingeben")  # Text area for user input, highlighted
+        st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)  # Add margin between text area and file uploader
+        col_submit, col_new_chat = st.columns([2, 1], gap="medium")
         with col_submit:
             submit_button = st.button("Absenden", key="submit")  # Submit button, left aligned
         with col_new_chat:
             new_chat_button = st.button("Neuer Chat", key="new_chat")  # New chat button, right aligned
+
+        st.markdown("<div style='margin-bottom: 50px;'></div>", unsafe_allow_html=True)  # Add margin between buttons and file uploader
+
+        uploaded_file = st.file_uploader("Falls gewünscht, lade ein Bild hoch ...", accept_multiple_files=False, type=["png", "jpg", "jpeg", "webp", "gif"], key="uploaded_file")
+        if uploaded_file:
+            st.image(uploaded_file, caption="Hochgeladenes Bild", use_container_width=True)  # Display uploaded image with a fixed height of 100 pixels
+
         if new_chat_button:
             # Clear the session state
             st.session_state.chat_history = []
