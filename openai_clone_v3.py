@@ -29,7 +29,7 @@ def main():
      # Column 1: User Input Section
     with col1:
         st.header("Wie kann ich Dir helfen?")  # Title for the left column
-        user_input = st.text_area("Deine Frage hier eingeben:", value=st.session_state.user_input, key="user_input", height=150, help="Bitte hier die Frage eingeben")  # Text area for user input, highlighted
+        user_input = st.text_area("Deine Frage hier eingeben:", key="user_input", height=150, help="Bitte hier die Frage eingeben")  # Text area for user input, highlighted
         st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)  # Add margin between text area and file uploader
         col_submit, col_new_chat = st.columns([2, 1], gap="medium")
         with col_submit:
