@@ -46,8 +46,6 @@ def main():
         if new_chat_button:
             # Clear the session state
             st.session_state.chat_history = []
-            #st.session_state.user_input = ''
-            st.session_state.uploaded_file = None
             st.rerun()  # Rerun to refresh UI components
 
 
