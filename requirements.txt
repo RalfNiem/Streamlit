@@ -1,5 +1,5 @@
 #pypdf
 #python-dotenv
 streamlit
-openai==1.41.0
+openai
 PyMuPDF
