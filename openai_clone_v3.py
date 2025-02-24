@@ -14,6 +14,10 @@ import base64
 import openai
 from openai import OpenAI
 
+# Keys einlesen
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
+
 def main():
     # Set page configuration for full screen layout
     st.set_page_config(layout="wide")
