@@ -176,16 +176,11 @@ def main():
             on_change=handle_input_submit
         )
 
-        st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+        #st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
-        # Buttons
-        col_submit, col_new_chat = st.columns([2, 1], gap="medium")
-        #with col_submit:
-            #st.button("Absenden", key="submit", on_click=handle_input_submit)  # Submit button, left aligned
-        with col_new_chat:
-            st.button("Neuer Chat", on_click=clear_chat)
+        st.button("Neuen Chat starten ...", on_click=clear_chat)
 
-        st.markdown("<div style='margin-bottom: 50px;'></div>", unsafe_allow_html=True)
+        #st.markdown("<div style='margin-bottom: 50px;'></div>", unsafe_allow_html=True)
 
         # File uploader with callback
         st.file_uploader(
