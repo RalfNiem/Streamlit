@@ -116,7 +116,7 @@ def call_openai_api():
                     ]
                 }
             )
-        elif st.session_state.uploaded_file_type == "PDF":share
+        elif st.session_state.uploaded_file_type == "PDF":
             pdf_text = get_all_text_from_pdf(st.session_state.uploaded_file_stream)
             user_query = f"*** Inhalt des Dokuments ***\n<Dokument-Text>{pdf_text}</Dokument-Text>\n*** User-Query ***\n<User-Query>{st.session_state.user_input}</User-Query>"
             messages.append({"role": "user", "content": user_query})
