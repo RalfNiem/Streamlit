@@ -13,19 +13,21 @@ import os
 import io
 import fitz  # PyMuPDF
 import base64
+from PIL import Image
 import openai
 from openai import OpenAI
 
+OPENAI_MODEL = "gpt-4o"
 # Keys einlesen
-#from dotenv import load_dotenv, find_dotenv
-#_ = load_dotenv(find_dotenv())
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
 
 
 def handle_input_submit():
     """Callback for when text input changes"""
     if st.session_state.user_input:
         try:
-            call_gpt4_api()
+            call_openai_api()
             st.session_state.user_input = ""
         except Exception as e:
             st.error(f"Ein unerwarteter Fehler ist während der 'handle_input_submit()' aufgetreten: {str(e)}")
@@ -41,18 +43,23 @@ def handle_file_upload():
         if file_extension in image_extensions:
             st.session_state.uploaded_file_type = "Image"
             st.session_state.displayed_image = True
+
         elif file_extension == 'pdf':
             st.session_state.uploaded_file_type = "PDF"
-            st.session_state.displayed_image = False
+            st.session_state.displayed_image = True
             # Bytes aus Streamlit-Upload lesen
-            pdf_bytes = st.session_state.uploaded_file.read()
-            st.session_state.uploaded_file_text = get_all_text_from_pdf(pdf_bytes)
+            #pdf_bytes = st.session_state.uploaded_file.read()
+            st.session_state.uploaded_file_stream = io.BytesIO(st.session_state.uploaded_file.read())
 
         else:
             st.error("Unsupported file type. Please upload an image or PDF file.")
             st.session_state.uploaded_file_type = None
             st.session_state.displayed_image = False
             return
+    else:
+        st.session_state.uploaded_file_type = None
+        st.session_state.displayed_image = False
+
 
 
 def clear_chat():
@@ -62,14 +69,10 @@ def clear_chat():
     st.session_state.displayed_image = False
 
 
-def get_all_text_from_pdf(pdf_bytes):
+def get_all_text_from_pdf(pdf_stream):
     # Datei öffnen und Text extrahieren
     try:
-        # BytesIO-Objekt erstellen
-        pdf_stream = io.BytesIO(pdf_bytes)
-        # PDF mit PyMuPDF öffnen
         doc = fitz.open(stream=pdf_stream, filetype="pdf")
-
         # Text aus allen Seiten extrahieren
         extracted_text = ""
         for page in doc:
@@ -86,7 +89,7 @@ def get_all_text_from_pdf(pdf_bytes):
 def encode_image(uploaded_file):
     return base64.b64encode(uploaded_file.getvalue()).decode('utf-8')
 
-def call_gpt4_api():
+def call_openai_api():
     # Calling OpenAI's GPT-4 API
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))  # Initialize OpenAI client with API key from environment variables
 
@@ -96,6 +99,7 @@ def call_gpt4_api():
                     - Explain Reasoning: Always explain the steps or concepts behind your answer, referencing relevant theories, processes, or data.
                     - Curriculum-Aligned: Use terminology and examples aligned with A-Level standards in these subjects.
                     - Clear and Supportive: Keep explanations clear and supportive, ensuring students feel encouraged and confident.
+                    - Only use Markdown format, never Latex format
                     """
 
     # Prepare the conversation context messages
@@ -113,7 +117,8 @@ def call_gpt4_api():
                 }
             )
         elif st.session_state.uploaded_file_type == "PDF":
-            user_query = f"*** Inhalt des Dokuments ***\n<Dokument-Text>{st.session_state.uploaded_file_text}</Dokument-Text>\n*** User-Query ***\n<User-Query>{st.session_state.user_input}</User-Query>"
+            pdf_text = get_all_text_from_pdf(st.session_state.uploaded_file_stream)
+            user_query = f"*** Inhalt des Dokuments ***\n<Dokument-Text>{pdf_text}</Dokument-Text>\n*** User-Query ***\n<User-Query>{st.session_state.user_input}</User-Query>"
             messages.append({"role": "user", "content": user_query})
 
     else:
@@ -122,7 +127,7 @@ def call_gpt4_api():
     try:
         # Make the API call to GPT-4 with the provided messages
         response = client.chat.completions.create(
-          model="gpt-4o",
+          model=OPENAI_MODEL,
           messages=messages,
           temperature=0.6,
         )
@@ -150,6 +155,8 @@ def main():
         st.session_state.uploaded_file_type = None
     if 'uploaded_file_text' not in st.session_state:
         st.session_state.uploaded_file_text = ""
+    if 'uploaded_file_stream' not in st.session_state:
+        st.session_state.uploaded_file_stream = ""
 
     # Set page configuration for full screen layout
     st.set_page_config(layout="wide")
@@ -191,11 +198,21 @@ def main():
 
         # Display uploaded image if present
         if st.session_state.uploaded_file and st.session_state.displayed_image:
-            st.image(
-                st.session_state.uploaded_file,
-                caption="Hochgeladenes Bild",
-                use_container_width=True
-            )
+            if st.session_state.uploaded_file_type == "Image":
+                st.image(
+                    st.session_state.uploaded_file,
+                    caption="Hochgeladenes Bild",
+                    use_container_width=True
+                )
+            elif st.session_state.uploaded_file_type == "PDF":
+                doc = fitz.open(stream=st.session_state.uploaded_file_stream, filetype="pdf")
+                # Erste Seite rendern
+                page = doc[0]
+                pix = page.get_pixmap()  # Erstellt ein Bildobjekt (Pixmap)
+
+                # Pixmap in ein PIL-Bild umwandeln
+                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                st.image(img, use_container_width=True)
 
     # Display chat history and responses in second column
     with col2:
