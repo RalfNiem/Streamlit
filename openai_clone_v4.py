@@ -19,8 +19,8 @@ from openai import OpenAI
 
 OPENAI_MODEL = "gpt-4o"
 # Keys einlesen
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())
+#from dotenv import load_dotenv, find_dotenv
+#_ = load_dotenv(find_dotenv())
 
 
 def handle_input_submit():
@@ -116,7 +116,7 @@ def call_openai_api():
                     ]
                 }
             )
-        elif st.session_state.uploaded_file_type == "PDF":
+        elif st.session_state.uploaded_file_type == "PDF":share
             pdf_text = get_all_text_from_pdf(st.session_state.uploaded_file_stream)
             user_query = f"*** Inhalt des Dokuments ***\n<Dokument-Text>{pdf_text}</Dokument-Text>\n*** User-Query ***\n<User-Query>{st.session_state.user_input}</User-Query>"
             messages.append({"role": "user", "content": user_query})
