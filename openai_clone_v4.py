@@ -17,7 +17,7 @@ from PIL import Image
 import openai
 from openai import OpenAI
 
-OPENAI_MODEL = "gpt-4o"
+OPENAI_MODEL = "o4-mini"
 # Keys einlesen
 #from dotenv import load_dotenv, find_dotenv
 #_ = load_dotenv(find_dotenv())
@@ -129,7 +129,7 @@ def call_openai_api():
         response = client.chat.completions.create(
           model=OPENAI_MODEL,
           messages=messages,
-          temperature=0.6,
+          temperature=1,
         )
 
         # Extract assistant response
